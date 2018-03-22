@@ -2,6 +2,7 @@ package br.com.flucas.relatorio;
 
 import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Map;
 
@@ -24,6 +25,8 @@ public interface Relatorio {
 	public InputStream toInputStream(FormatoRelatorio formato);
 	
 	public File toFile(FormatoRelatorio formato);
+	
+	public File toFile(FormatoRelatorio formato, Path diretorio);
 	
 	public File toFile(FormatoRelatorio formato, File file);
 

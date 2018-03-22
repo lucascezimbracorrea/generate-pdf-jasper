@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -88,11 +90,22 @@ public class RelatorioJasper implements Relatorio {
 	
 	@Override
 	public File toFile(FormatoRelatorio formato) {
+		
 		try {
-            return toFile(formato, File.createTempFile("relatorio_", "." + formato.getExtension()));
+            return toFile(formato, Files.createTempDirectory("relatorios_temporarios"));
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+	}
+	
+	@Override
+	public File toFile(FormatoRelatorio formato, Path diretorio) {
+		try {
+			File arquivoTemporario = Files.createTempFile(diretorio, "relatorio_", "." + formato.getExtension()).toFile();
+			return toFile(formato, arquivoTemporario);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	@Override
